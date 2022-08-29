@@ -4,7 +4,7 @@ const router = express.Router()
 const conn = require('./../db/mysql')
 
 router.post('/create/user', async(req,res)=>{
-    let isUserExist = conn.execute("SELECT * from `user_details` where `email` = ?", [req.body.email], (err, result) => {
+    let isUserExist = conn.query("SELECT * from `user_details` where `email` = ?", [req.body.email], (err, result) => {
         if (err){
             throw err
         }
@@ -18,7 +18,7 @@ router.post('/create/user', async(req,res)=>{
     const user = User.userSchema.validate(req.body)
     
     try{
-        conn.execute("INSERT INTO `badminton`.`user_details`(`firstName`,`lastName`,`email`,`type`,`age`,`gender`,`password`) VALUES = (?, ?, ?, ?, ?, ?, ?);", [req.body.firstName, req.body.lastName, req.body.email, req.body.type, req.body.age, req.body.gender, req.body.password], (err, result) => {
+        conn.query("INSERT INTO `badminton`.`user_details`(`firstName`,`lastName`,`email`,`type`,`age`,`gender`,`password`) VALUES = (?, ?, ?, ?, ?, ?, ?);", [req.body.firstName, req.body.lastName, req.body.email, req.body.type, req.body.age, req.body.gender, req.body.password], (err, result) => {
             if (err){
                 throw err
             }
