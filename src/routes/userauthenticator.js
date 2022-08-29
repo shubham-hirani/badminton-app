@@ -2,6 +2,7 @@ const express = require('express')
 const User = require('../schema/userSchema')
 const router = express.Router()
 const conn = require('./../db/mysql')
+const auth = require('./../middlewares/auth')
 
 router.post('/create/user', async(req,res)=>{
     let isUserExist = conn.query("SELECT * from `user_details` where `email` = ?", [req.body.email], (err, result) => {
@@ -53,6 +54,11 @@ router.post('/login', async(req,res)=>{
         res.status(400).send(err)
         
     }
+})
+
+
+router.get("/", auth, async(req, res) => {
+    return res.status(200).send({"message": "welcome to badminton app"})
 })
 
 module.exports= router
